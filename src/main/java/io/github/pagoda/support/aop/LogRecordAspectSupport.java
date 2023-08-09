@@ -6,8 +6,8 @@ import io.github.pagoda.support.annoation.LogRecordOperationSource;
 import io.github.pagoda.support.config.LogRecordDetail;
 import io.github.pagoda.support.config.LogRecordErrorHandler;
 import io.github.pagoda.support.config.LogRecordResolver;
-import io.github.pagoda.support.config.SimpleLogRecordErrorHandler;
-import io.github.pagoda.support.config.SimpleLogRecordResolver;
+import io.github.pagoda.support.config.DefaultLogRecordErrorHandler;
+import io.github.pagoda.support.config.DefaultLogRecordResolver;
 import io.github.pagoda.support.expression.LogRecordOperationExpressionEvaluator;
 import io.github.pagoda.support.expression.LogRecordThreadContext;
 import io.github.pagoda.support.function.IFunctionService;
@@ -79,8 +79,8 @@ public abstract class LogRecordAspectSupport implements BeanFactoryAware, Initia
 
     public void configure(
             @Nullable Supplier<LogRecordErrorHandler> errorHandler, @Nullable Supplier<LogRecordResolver> logResolver) {
-        this.errorHandler = new SingletonSupplier<>(errorHandler, SimpleLogRecordErrorHandler::new);
-        this.recordResolver = new SingletonSupplier<>(logResolver, SimpleLogRecordResolver::new);
+        this.errorHandler = new SingletonSupplier<>(errorHandler, DefaultLogRecordErrorHandler::new);
+        this.recordResolver = new SingletonSupplier<>(logResolver, DefaultLogRecordResolver::new);
     }
 
     public void setLogRecordOperationSource(LogRecordOperationSource logRecordOperationSource) {
@@ -132,6 +132,7 @@ public abstract class LogRecordAspectSupport implements BeanFactoryAware, Initia
             Object result = null;
             Throwable e = null;
             String errorMsg = null;
+            LogRecordThreadContext.putEmptySpan();
             try {
                 result = invokeOperation(invoker);
             } catch (Throwable throwable) {
@@ -139,7 +140,6 @@ public abstract class LogRecordAspectSupport implements BeanFactoryAware, Initia
                 errorMsg = throwable.getMessage();
             }
             long endTime = System.currentTimeMillis();
-            LogRecordThreadContext.putEmptySpan();
 
             for (LogRecordOperationContext context : contexts.get(LogRecordOperation.class)) {
                 recordExecute(context, new MethodExecuteContext(startTime, endTime, result, e, errorMsg));

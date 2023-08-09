@@ -16,7 +16,6 @@ public class LogRecordThreadContext {
     private static final InheritableThreadLocal<Map<String, Object>> GLOBAL_VARIABLE_MAP = new InheritableThreadLocal<>();
 
     private LogRecordThreadContext() {
-        throw new IllegalStateException("Utility class");
     }
 
     /**

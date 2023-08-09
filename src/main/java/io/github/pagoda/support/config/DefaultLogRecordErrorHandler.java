@@ -8,9 +8,9 @@ import org.apache.commons.logging.LogFactory;
  * @author fdrama
  * date 2023年07月26日 17:25
  */
-public class SimpleLogRecordErrorHandler implements LogRecordErrorHandler {
+public class DefaultLogRecordErrorHandler implements LogRecordErrorHandler {
 
-    private final Log logger = LogFactory.getLog(SimpleLogRecordErrorHandler.class);
+    private final Log logger = LogFactory.getLog(DefaultLogRecordErrorHandler.class);
 
     @Override
     public void handleLogRecordError(LogRecordOperationInvocationContext<?> context, RuntimeException exception) {
