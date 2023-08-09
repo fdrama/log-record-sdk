@@ -21,7 +21,7 @@ public class Application {
 
 ### 使用注解 @LogRecord 支持多个注解
 
-```java
+```
 @LogRecord(
         type = LogType.Constants.USER, // 日志类型
         subType = LogSubType.Constants.ADD, // 日志子类型 
@@ -95,7 +95,7 @@ public class SensitiveParseFunction implements IParseFunction {
 
 在一些场景里面我们无法只通过参数获取到所有日志信息，这里就需要使用到`LogRecordThreadContext`
 
-```java
+```
 LogRecordThreadContext.putVariable("content","extra info");
 
 @LogRecord(
