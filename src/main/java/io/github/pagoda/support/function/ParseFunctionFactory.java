@@ -13,14 +13,14 @@ import java.util.Map;
  */
 public class ParseFunctionFactory {
 
-    private Map<String, IParseFunction> parseFunctionMap;
+    private Map<String, ParseFunction> parseFunctionMap;
 
-    public ParseFunctionFactory(List<IParseFunction> parseFunctions) {
+    public ParseFunctionFactory(List<ParseFunction> parseFunctions) {
         if (CollectionUtils.isEmpty(parseFunctions)) {
             return;
         }
         parseFunctionMap = new HashMap<>();
-        for (IParseFunction parseFunction : parseFunctions) {
+        for (ParseFunction parseFunction : parseFunctions) {
             if (!StringUtils.hasText(parseFunction.functionName())) {
                 continue;
             }
@@ -28,7 +28,7 @@ public class ParseFunctionFactory {
         }
     }
 
-    public IParseFunction getFunction(String functionName) {
+    public ParseFunction getFunction(String functionName) {
         return parseFunctionMap.get(functionName);
     }
 

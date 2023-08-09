@@ -4,7 +4,7 @@ package io.github.pagoda.support.function;
  * @author fdrama
  * date 2023年07月28日 17:15
  */
-public interface IFunctionService {
+public interface FunctionService {
 
     /**
      * apply function

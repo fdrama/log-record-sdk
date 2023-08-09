@@ -7,7 +7,7 @@ import org.apache.commons.logging.LogFactory;
  * @author fdrama
  * date 2023年07月28日 17:15
  */
-public class DefaultFunctionServiceImpl implements IFunctionService {
+public class DefaultFunctionServiceImpl implements FunctionService {
 
     protected final Log logger = LogFactory.getLog(getClass());
 
@@ -19,7 +19,7 @@ public class DefaultFunctionServiceImpl implements IFunctionService {
 
     @Override
     public String apply(String functionName, Object... value) {
-        IParseFunction function = parseFunctionFactory.getFunction(functionName);
+        ParseFunction function = parseFunctionFactory.getFunction(functionName);
         if (function == null) {
             logger.warn("function not found: " + functionName);
             return null;

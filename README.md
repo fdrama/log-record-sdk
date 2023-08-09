@@ -59,7 +59,7 @@ public class DefaultOperatorGetServiceImpl implements IOperatorGetService {
 
 在有些场景我们需要对参数进行处理，比如加密、根据id获取名称等等，来构建日志内容，这里就需要使用到function
 
-1. 实现`IParseFunction`接口，指定functionName，实现自己的function逻辑
+1. 实现`ParseFunction`接口，指定functionName，实现自己的function逻辑
 2. 在注解中使用`{functionName{#user.id,#user.name}}`的方式使用function，支持多参数
 
 ```java
@@ -108,20 +108,20 @@ LogRecordThreadContext是使用栈的方式实现的，所以在方法调用结�
 
 ### 拓展点
 
-#### 1. 操作人获取 IOperatorGetService
+#### 1. 操作人获取 OperatorGetService
 
-上面介绍了两种方式指定操作人，如果需要自定义操作人获取方式，可以实现`IOperatorGetService`接口
+上面介绍了两种方式指定操作人，如果需要自定义操作人获取方式，可以实现`OperatorGetService`接口
 
-#### 2. 日志记录错误处理器 ILogRecordErrorHandler
+#### 2. 日志记录错误处理器 LogRecordErrorHandler
 
 1. 默认实现类 `DefaultLogRecordErrorHandler` 会将错误日志记录到日志文件中
-2. 自定义实现类可以实现`ILogRecordErrorHandler`接口，实现自己的错误处理逻辑，全局通用
+2. 自定义实现类可以实现`LogRecordConfigurer`接口，实现自己的错误处理逻辑，全局通用
 3. 可以在类上使用`@LogRecordConfig`注解指定错误处理器的全限定类名，优先级高于全局配置
 
-#### 3. 日志记录解析器 ILogRecordResolver
+#### 3. 日志记录解析器 LogRecordResolver
 
 1. 默认实现类 `DefaultLogRecordResolver` 会将日志记录到日志文件中
-2. 自定义实现类可以实现`ILogRecordResolver`接口，实现自己的日志记录逻辑，全局通用
+2. 自定义实现类可以实现`LogRecordConfigurer`接口，实现自己的日志记录逻辑，全局通用
 3. 可以在类上使用`@LogRecordConfig`注解指定日志记录解析器的全限定类名，优先级高于全局配置
 
 ```java

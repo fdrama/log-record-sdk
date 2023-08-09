@@ -10,8 +10,8 @@ import io.github.pagoda.support.config.DefaultLogRecordErrorHandler;
 import io.github.pagoda.support.config.DefaultLogRecordResolver;
 import io.github.pagoda.support.expression.LogRecordOperationExpressionEvaluator;
 import io.github.pagoda.support.expression.LogRecordThreadContext;
-import io.github.pagoda.support.function.IFunctionService;
-import io.github.pagoda.support.function.IOperatorGetService;
+import io.github.pagoda.support.function.FunctionService;
+import io.github.pagoda.support.function.OperatorGetService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -72,9 +72,9 @@ public abstract class LogRecordAspectSupport implements BeanFactoryAware, Initia
 
     private SingletonSupplier<LogRecordErrorHandler> errorHandler;
 
-    private IFunctionService functionService;
+    private FunctionService functionService;
 
-    private IOperatorGetService operatorGetService;
+    private OperatorGetService operatorGetService;
     private final Pattern TEMPLATE_PATTERN = Pattern.compile("\\{\\s*(\\w*)\\s*\\{(.*?)}}");
 
     public void configure(
@@ -106,8 +106,8 @@ public abstract class LogRecordAspectSupport implements BeanFactoryAware, Initia
     @Override
     public void afterSingletonsInstantiated() {
         this.initialized = true;
-        setFunctionService(BeanFactoryAnnotationUtils.qualifiedBeanOfType(beanFactory, IFunctionService.class, "functionService"));
-        setOperatorGetService(BeanFactoryAnnotationUtils.qualifiedBeanOfType(beanFactory, IOperatorGetService.class, "operatorGetService"));
+        setFunctionService(BeanFactoryAnnotationUtils.qualifiedBeanOfType(beanFactory, FunctionService.class, "functionService"));
+        setOperatorGetService(BeanFactoryAnnotationUtils.qualifiedBeanOfType(beanFactory, OperatorGetService.class, "operatorGetService"));
     }
 
     protected Object execute(LogRecordOperationInvoker invoker, Object target, Method method, Object[] args) {
@@ -543,11 +543,11 @@ public abstract class LogRecordAspectSupport implements BeanFactoryAware, Initia
         this.evaluator.clear();
     }
 
-    public void setFunctionService(IFunctionService functionService) {
+    public void setFunctionService(FunctionService functionService) {
         this.functionService = functionService;
     }
 
-    public void setOperatorGetService(IOperatorGetService operatorGetService) {
+    public void setOperatorGetService(OperatorGetService operatorGetService) {
         this.operatorGetService = operatorGetService;
     }
 }

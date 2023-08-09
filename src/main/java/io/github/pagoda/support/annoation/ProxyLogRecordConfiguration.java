@@ -2,14 +2,15 @@ package io.github.pagoda.support.annoation;
 
 import io.github.pagoda.support.aop.BeanFactoryLogRecordSourceAdvisor;
 import io.github.pagoda.support.aop.LogRecordInterceptor;
+import io.github.pagoda.support.config.LogRecordConfigurer;
 import io.github.pagoda.support.config.LogRecordErrorHandler;
 import io.github.pagoda.support.config.LogRecordResolver;
 import io.github.pagoda.support.function.DefaultFunctionServiceImpl;
 import io.github.pagoda.support.function.DefaultOperatorGetServiceImpl;
 import io.github.pagoda.support.function.DefaultParseFunction;
-import io.github.pagoda.support.function.IFunctionService;
-import io.github.pagoda.support.function.IOperatorGetService;
-import io.github.pagoda.support.function.IParseFunction;
+import io.github.pagoda.support.function.FunctionService;
+import io.github.pagoda.support.function.OperatorGetService;
+import io.github.pagoda.support.function.ParseFunction;
 import io.github.pagoda.support.function.ParseFunctionFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,25 +81,25 @@ public class ProxyLogRecordConfiguration implements ImportAware {
     }
 
     @Bean
-    @ConditionalOnMissingBean(IFunctionService.class)
-    public IFunctionService functionService(ParseFunctionFactory parseFunctionFactory) {
+    @ConditionalOnMissingBean(FunctionService.class)
+    public FunctionService functionService(ParseFunctionFactory parseFunctionFactory) {
         return new DefaultFunctionServiceImpl(parseFunctionFactory);
     }
 
     @Bean
-    public ParseFunctionFactory parseFunctionFactory(@Autowired List<IParseFunction> parseFunctions) {
+    public ParseFunctionFactory parseFunctionFactory(@Autowired List<ParseFunction> parseFunctions) {
         return new ParseFunctionFactory(parseFunctions);
     }
 
     @Bean
-    @ConditionalOnMissingBean(IParseFunction.class)
+    @ConditionalOnMissingBean(ParseFunction.class)
     public DefaultParseFunction parseFunction() {
         return new DefaultParseFunction();
     }
 
 
     @Bean
-    @ConditionalOnMissingBean(IOperatorGetService.class)
+    @ConditionalOnMissingBean(OperatorGetService.class)
     public DefaultOperatorGetServiceImpl operatorGetService() {
         return new DefaultOperatorGetServiceImpl();
     }

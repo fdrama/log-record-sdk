@@ -6,7 +6,7 @@ import java.util.Arrays;
  * @author fdrama
  * date 2023年07月28日 17:14
  */
-public class DefaultParseFunction implements IParseFunction {
+public class DefaultParseFunction implements ParseFunction {
 
     @Override
     public String functionName() {
